@@ -1,0 +1,92 @@
+<!-- templates/index.html -->
+
+{% extends 'base.html' %} {% block title %} ООО "Развитие" {% endblock %} {%
+block body %}
+<body class="body">
+  <div class="page">
+    <header class="header">
+      <div class="header__left">
+        <img
+          src="{{ url_for('static', filename='images/header_logo.png') }}"
+          class="header_logo"
+          alt=""
+        />
+      </div>
+      <div class="header__main">
+        <a class="nav__link nav__link--header" href="">О парке</a>
+        <a class="nav__link nav__link--header" href="">Автопарк</a>
+        <a class="nav__link nav__link--header" href="">Контакты</a>
+        <a class="nav__link nav__link--header" href="">Вакансии</a>
+      </div>
+
+      <form action="{{ url_for('auth.login') }}" >
+        <button class="header__right">
+          <div class="profile__photo">
+            <img
+              src="{{ url_for('static', filename='images/profile_photo.svg') }}"
+              alt=""
+            />
+          </div>
+          <div  class="profile__name">Войти</div>
+        </button>
+
+      </form>
+
+    </header>
+    <div class="main">
+      <div class="content">
+        <div class="content__info">
+          <img class="avto_logo" src="static/images/avto_logo.png" alt="" />
+          <div class="content__info__main">
+            <div class="content__info__item">Работа в такси</div>
+            <div class="content__info__item">Работа курьером</div>
+            <div class="content__info__item">Авто в аренду</div>
+            <div class="content__info__item">Выкуп авто</div>
+          </div>
+          <div class="content__info__main">
+            <div class="content__info__item">Мгновенные выплаты</div>
+            <div class="content__info__item">Гибкий график</div>
+            <div class="content__info__item">Бонусы</div>
+            <div class="content__info__item">Низкие цены</div>
+          </div>
+        </div>
+        <div class="modal">
+          <div class="modal__content">
+            <div class="modal__header">
+              <p>Заполнить заявку!</p>
+              <button class="close__modal">
+                <img src="static/images/close.svg" alt="" />
+              </button>
+            </div>
+            <div class="modal__action">
+              <form class="modal__form" action="/telegram" method="POST">
+                <input
+                  class="api__input"
+                  placeholder="Email"
+                  name="email"
+                  value=""
+                />
+                <input
+                  class="api__input"
+                  placeholder="Телефон"
+                  name="number"
+                  value=""
+                />
+                <input class="btn__sent__api" type="submit" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="btnM1" class="modal-showF">
+      <img src="static/images/phone_logo.svg" alt="" />
+      <p>Оставьте заявку</p>
+    </button>
+  </div>
+</body>
+{% endblock %}
+<!-- my_message = 'Hello'
+    url = 'https://api.telegram.org/bot5336401318:AAHbjzmb3TqWPFf25dNPP1D5YQHpVwUzW0M/sendMessage'
+    req = {'chat_id': '314470288', 'text': my_message}
+    requests.post(url, req) -->

@@ -1,0 +1,134 @@
+{% extends "base.html" %} {% block body %}
+<body class="body">
+  <div class="page">
+    <header class="header">
+      <div class="header__left">
+        <img
+          src="{{ url_for('static', filename='images/header_logo.png') }}"
+          class="header_logo"
+          alt=""
+        />
+      </div>
+      <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}"
+          >Автомобили</a
+        >
+        <a
+          class="nav__link nav__link--header"
+          href="{{ url_for('main.spare') }}"
+          >Запчасти</a
+        >
+        <a
+          class="nav__link nav__link--header"
+          href="{{ url_for('main.driver') }}"
+          >Водители</a
+        >
+      </div>
+      <form action="{{ url_for('main.profile') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img
+              src="{{ url_for('static', filename='images/profile_photo.svg') }}"
+              alt=""
+            />
+          </div>
+          <div class="profile__name">{{ name }}</div>
+        </button>
+      </form>
+    </header>
+    <div class="main">
+      <div class="content">
+        <div class="avto__action">
+          {% for el in avto %}
+          <a class="tab_car__container" href="/car/{{ el.avto_id }}">
+            <div class="car__container">
+              <div class="car__container__img">
+                <img src="" alt="" />
+              </div>
+              <div class="car__container__tittle">{{ el.number }}</div>
+            </div>
+          </a>
+          {% endfor %}
+
+          <button class="btn_add__avto">
+            <div class="">+</div>
+            <p class="p_add__avto">Добавить автомобиль</p>
+          </button>
+        </div>
+        <div class="modal">
+          <div class="modal__content">
+            <div class="modal__header">
+              <p>Введите данные авто</p>
+              <button class="close__modal">
+                <img src="static/images/close.svg" alt="" />
+              </button>
+            </div>
+            <div class="modal__action">
+              <form class="add__avto__content" action="/add_car" method="post">
+                <div class="add__avto__container">
+                  <p>Введите марку авто:</p>
+                  <input
+                    name="car_make"
+                    type="text"
+                    class="add__avto__input"
+                    required
+                  />
+                </div>
+
+                <div class="add__avto__container">
+                  <p>Введите модель авто:</p>
+                  <input
+                    name="car_model"
+                    type="text"
+                    class="add__avto__input"
+                    required
+                  />
+                </div>
+                <div class="add__avto__FlexBox">
+                  <p>Укажите год выпуска:</p>
+                  <input
+                    class="add__avto__date"
+                    type="number"
+                    min="2012"
+                    max="2022"
+                    step="1"
+                    value="2014"
+                    name="years"
+                    required
+                  />
+                </div>
+                <div class="add__avto__FlexBox">
+                  <p>Введите Гос. номер авто:</p>
+                  <input
+                    class="add__avto__number"
+                    type="text"
+                    placeholder="А001АА01"
+                    name="number"
+                    required
+                  />
+                </div>
+                <div class="add__avto__FlexBox">
+                  <p>Введите настоящий пробег:</p>
+                  <input
+                    class="add__avto__number"
+                    type="number"
+                    placeholder="Км"
+                    step="1000"
+                    name="mileage"
+                    required
+                  />
+                </div>
+                <button class="btn_save__avto">Отправить</button>
+              </form>
+              {% with messages = get_flashed_messages() %} {% if messages %}
+              <div class="flask_fix">{{ messages[0] }}</div>
+              {% endif %} {% endwith %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}
