@@ -2,36 +2,39 @@
 
 {% extends 'base.html' %} {% block title %} ООО "Развитие" {% endblock %} {%
 block body %}
+
 <body class="body">
   <div class="page">
     <header class="header">
       <div class="header__left">
-        <img
-          src="{{ url_for('static', filename='images/header_logo.png') }}"
-          class="header_logo"
-          alt=""
-        />
+        <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
       </div>
       <div class="header__main">
-        <a class="nav__link nav__link--header" href="">О парке</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.about') }}">О парке</a>
         <a class="nav__link nav__link--header" href="">Автопарк</a>
         <a class="nav__link nav__link--header" href="">Контакты</a>
         <a class="nav__link nav__link--header" href="">Вакансии</a>
       </div>
-
-      <form action="{{ url_for('auth.login') }}" >
+      {% if current_user.is_authenticated %}
+      <form action="{{ url_for('main.profile') }}">
         <button class="header__right">
           <div class="profile__photo">
-            <img
-              src="{{ url_for('static', filename='images/profile_photo.svg') }}"
-              alt=""
-            />
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
           </div>
-          <div  class="profile__name">Войти</div>
+          <div class="profile__name">{{ current_user.name }}</div>
         </button>
-
       </form>
-
+      {% endif %}
+      {% if current_user.is_anonymous %}
+      <form action="{{ url_for('auth.login') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
+          </div>
+          <div class="profile__name">Войти</div>
+        </button>
+      </form>
+      {% endif %}
     </header>
     <div class="main">
       <div class="content">
@@ -60,18 +63,9 @@ block body %}
             </div>
             <div class="modal__action">
               <form class="modal__form" action="/telegram" method="POST">
-                <input
-                  class="api__input"
-                  placeholder="Email"
-                  name="email"
-                  value=""
-                />
-                <input
-                  class="api__input"
-                  placeholder="Телефон"
-                  name="number"
-                  value=""
-                />
+                <input class="api__input" placeholder="Email" name="email" value="" />
+                <input class="api__input" placeholder="+7 (999) 99 99 999" name="phone" type="text" id="phone"
+                  value="" />
                 <input class="btn__sent__api" type="submit" />
               </form>
             </div>

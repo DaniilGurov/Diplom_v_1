@@ -8,44 +8,23 @@
     <div class="notification is-danger">{{ messages[0] }}</div>
     {% endif %} {% endwith %}
     <form class="auth__login" method="POST" action="/registration">
-      <input
-        class="auth__input"
-        type="text"
-        name="name"
-        placeholder="Имя"
-      />
-      <input
-        class="auth__input"
-        type="email"
-        name="email"
-        placeholder="Email"
-      />
+      <input class="auth__input" type="text" name="name" placeholder="Имя" />
+      <input class="auth__input" type="email" name="email" placeholder="Email" />
       <div class="flex_boxCenter">
-      <input
-        class="auth__input "
-        type="password"
-        name="password"
-        id="password-input2"
-        placeholder="Пароль"
-      />
+        <input class="auth__input " type="password" name="password" id="password-input2" placeholder="Пароль" />
         <label class="password_label">
-            <input type="checkbox" class="password-checkbox" id="password-checkbox2">
-            <span class="password-check__box"></span>
+          <input type="checkbox" class="password-checkbox" id="password-checkbox2">
+          <span class="password-check__box"></span>
         </label>
-</div>
-       <div class="flex_boxCenter">
-      <input
-        class="auth__input"
-        type="password"
-        name="password2"
-        id="password-input3"
-        placeholder="Повторите пароль"
-      />
+      </div>
+      <div class="flex_boxCenter">
+        <input class="auth__input" type="password" name="password2" id="password-input3"
+          placeholder="Повторите пароль" />
         <label class="password_label">
-            <input type="checkbox" class="password-checkbox" id="password-checkbox3">
-            <span class="password-check__box"></span>
+          <input type="checkbox" class="password-checkbox" id="password-checkbox3">
+          <span class="password-check__box"></span>
         </label>
-</div>
+      </div>
       <button class="btn__auth__login">Зарегистрироваться</button>
     </form>
   </div>

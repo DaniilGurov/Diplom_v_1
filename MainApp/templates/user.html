@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block body %}
+
+<body class="body">
+    <div class="page">
+        <div class="modal show">
+            <a class="btn__prev" href="{{ url_for('main.users') }}" >
+                <img src="{{ url_for('static', filename='images/arrow__left.svg') }}">
+            </a>
+
+            <div class="modal__content modal__content--user">
+                <button class="btn__modal__user__edit"><img
+                        src="{{ url_for('static', filename='images/edit__logo.svg') }}"></button>
+                {% for us in user %}
+                <div> {{us.name}} </div>
+                <div> {{us.email}} </div>
+
+                {% if us.role_name == 'driver' %}
+                <div> Водитель </div>
+                {% endif %}
+                {% if us.role_name == 'partner' %}
+                <div> Партнер </div>
+                {% endif %}
+                {% endfor %}
+                <div></div>
+            </div>
+            <div class="modal__edit__user">
+                <button class="close__modal__user__edit">
+                    <img src="{{ url_for('static', filename='images/edit__logo.svg') }}">
+                </button>
+                {% for us in user %}
+                <form class="form__user" action="/reUser/{{ us.id }}" method="post">
+
+                    <input name="name" type="text" value="{{us.name}}">
+                    <input name="email" type="text" value="{{us.email}}">
+                    <select  name="user_role">
+                        <option value="driver">driver</option>
+                        <option value="partner">partner</option>
+                    </select>
+                    <button>сохранить</button>
+
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}

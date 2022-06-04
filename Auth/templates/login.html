@@ -4,30 +4,19 @@
 <div class="auth">
   <div class="auth__content">
     <img src="/static/images/header_logo.png" alt="" />
-       {% with messages = get_flashed_messages() %} {% if messages %}
+    {% with messages = get_flashed_messages() %} {% if messages %}
     <div class="notification is-danger">{{ messages[0] }}</div>
     {% endif %} {% endwith %}
     <form class="auth__login" method="POST" action="/login">
-      <input
-        class="auth__input"
-        type="email"
-        name="email"
-        placeholder="Email"
-        autofocus=""
-      />
+      <input class="auth__input" type="email" name="email" placeholder="Email" autofocus="" />
       <div class="flex_boxCenter">
-      <input
-        class="auth__input auth__input--nm "
-        type="password"
-        name="password"
-        id="password-input"
-        placeholder="Пароль"
-      />
+        <input class="auth__input auth__input--nm" type="password" name="password" id="password-input"
+          placeholder="Пароль" />
         <label class="password_label">
-            <input type="checkbox"class="password-checkbox" id="password-checkbox">
-            <span class="password-check__box"></span>
+          <input type="checkbox" class="password-checkbox" id="password-checkbox" />
+          <span class="password-check__box"></span>
         </label>
-</div>
+      </div>
 
       <div class="checkbox">
         <label class="check__label">
@@ -40,8 +29,7 @@
       <button class="btn__auth__login">Войти</button>
     </form>
     <a href="{{ url_for('auth.registration') }}" class="auth__tab">
-      Зарегистрироваться</a
-    >
+      Зарегистрироваться</a>
   </div>
 </div>
 {% endblock %}

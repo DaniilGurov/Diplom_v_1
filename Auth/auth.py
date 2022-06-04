@@ -1,3 +1,4 @@
+import requests
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from Auth.models import User
@@ -45,7 +46,8 @@ def registration__post():
         if user:
             flash('Пользователь с таким Email уже существует')
             return redirect(url_for('auth.registration'))
-        new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+        new_user = User(email=email, name=name, password=generate_password_hash(
+            password, method='sha256'))
 
         db.session.add(new_user)
         db.session.commit()
@@ -53,8 +55,17 @@ def registration__post():
     else:
         flash('Пароли не совпадают')
         return redirect(url_for('auth.registration'))
+    sendMessage()
     flash('Вы успешно зарегестрировались')
     return redirect(url_for('auth.login'))
+
+
+def sendMessage():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    url = 'https://api.telegram.org/bot5336401318:AAHbjzmb3TqWPFf25dNPP1D5YQHpVwUzW0M/sendMessage'
+    req = {'chat_id': '-1001779026771', 'text': 'Зарегестрирован новый пользователь' '\n'  'Email: ' + email + '\n' 'Имя: ' + name}
+    requests.post(url, req)
 
 
 @auth.route('/logout')

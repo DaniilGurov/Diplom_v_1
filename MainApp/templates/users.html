@@ -1,0 +1,78 @@
+<!-- templates/login.html -->
+
+{% extends "base.html" %} {% block body %}
+
+<body class="body">
+  <div class="page">
+    {% if current_user.role_name == 'admin' %}
+    <header class="header">
+      <div class="header__left">
+        <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
+      </div>
+      <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}">Пользователи</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}">Автомобили</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.spare') }}">Запчасти</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.driver') }}">Водители</a>
+      </div>
+      <form action="{{ url_for('main.profile') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
+          </div>
+          <div class="profile__name">{{ current_user.name }}</div>
+          <a href="{{ url_for('auth.logout') }}">
+            Выйти
+          </a>
+        </button>
+
+      </form>
+    </header>
+    {% endif %}
+    <div class="main">
+      <div class="content">
+        <div class="content__action">
+          {% for us in user %}
+          {% if not us.name == 'admin' %}
+          <div class="profile__user">
+            {% if not us.role_name %}
+            <div class="status__user">New</div>
+            {% endif %}
+            <div class="userAva">
+              <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
+            </div>
+            <div class="user__info__container">
+              <div class="user__info">
+                {{ us.name }}
+              </div>
+              <div class="user__info">
+                {{us.email}}
+              </div>
+              {% if us.role_name == 'driver' %}
+              <div class="user__info">
+                Водитель
+              </div>
+              {% endif %}
+              {% if us.role_name == 'partner' %}
+              <div class="user__info">
+                Парнер
+              </div>
+              {% endif %}
+              <a class="user__info__tab" href="/user/{{ us.id }}">
+                Профиль пользователя
+                <img src="/static/images/arrow_rightC4.svg" alt="">
+              </a>
+
+              <button class="btn__user"></button>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+{% endblock %}
