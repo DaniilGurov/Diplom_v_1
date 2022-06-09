@@ -6,13 +6,13 @@
   <div class="page">
     {% if current_user.role_name == 'admin' %}
     <header class="header">
-      <div class="header__left">
+      <a class="header__left" href="{{ url_for('main.index') }}">
         <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
-      </div>
+      </a>
       <div class="header__main">
         <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}">Пользователи</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}">Автомобили</a>
-        <a class="nav__link nav__link--header" href="{{ url_for('main.spare') }}">Запчасти</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.partners') }}">Партнеры</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.driver') }}">Водители</a>
       </div>
       <form action="{{ url_for('main.profile') }}">
@@ -20,10 +20,12 @@
           <div class="profile__photo">
             <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
           </div>
-          <div class="profile__name">{{ current_user.name }}</div>
-          <a href="{{ url_for('auth.logout') }}">
-            Выйти
-          </a>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
         </button>
 
       </form>
@@ -39,7 +41,12 @@
             <div class="status__user">New</div>
             {% endif %}
             <div class="userAva">
+              {% if us.user_photo %}
+              <img src="{{url_for ('static',filename=us.user_photo)}}" alt="">
+              {% endif %}
+              {% if not us.user_photo %}
               <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
+              {% endif %}
             </div>
             <div class="user__info__container">
               <div class="user__info">

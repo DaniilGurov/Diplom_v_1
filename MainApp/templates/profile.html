@@ -4,15 +4,56 @@
 
 <body class="body">
   <div class="page">
+    {% if not current_user.role_name %}
+    <header class="header">
+      <a class="header__left" href="{{ url_for('main.index') }}">
+        <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
+      </a>
+      <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#benefits">Почему мы?</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#about">О парке</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#avtopark">Автопарк</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#contact">Контакты</a>
+      </div>
+      {% if current_user.is_authenticated %}
+      <form action="{{ url_for('main.profile') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
+          </div>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
+
+        </button>
+
+      </form>
+      {% endif %}
+      {% if current_user.is_anonymous %}
+      <form action="{{ url_for('auth.login') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
+          </div>
+          <div class="profile__name">Войти</div>
+
+        </button>
+      </form>
+      {% endif %}
+    </header>
+    {% endif %}
     {% if current_user.role_name == 'admin' %}
     <header class="header">
-      <div class="header__left">
+      <a class="header__left" href="{{ url_for('main.index') }}">
         <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
-      </div>
+      </a>
       <div class="header__main">
-        <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}" >Пользователи</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}">Пользователи</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}">Автомобили</a>
-        <a class="nav__link nav__link--header" href="{{ url_for('main.spare') }}">Запчасти</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.partners') }}">Партнеры</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.driver') }}">Водители</a>
       </div>
       <form action="{{ url_for('main.profile') }}">
@@ -20,10 +61,39 @@
           <div class="profile__photo">
             <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
           </div>
-          <div class="profile__name">{{ name }}</div>
-          <a href="{{ url_for('auth.logout') }}">
-          Выйти
-        </a>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
+        </button>
+
+      </form>
+    </header>
+    {% endif %}
+    {% if current_user.role_name == 'partner' or current_user.role_name == 'driver' %}
+    <header class="header">
+      <a class="header__left" href="{{ url_for('main.index') }}">
+        <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
+      </a>
+      <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#benefits">Почему мы?</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#about">О парке</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#avtopark">Автопарк</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.index') }}#contact">Контакты</a>
+      </div>
+      <form action="{{ url_for('main.profile') }}">
+        <button class="header__right">
+          <div class="profile__photo">
+            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
+          </div>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
         </button>
 
       </form>
@@ -36,9 +106,24 @@
 
         {% endif %}
         {% if current_user.role_name == 'driver' %}
-        <a href="{{ url_for('auth.logout') }}">
-          Выйти
-        </a>
+        <div class="content__role__header">Личный кабинет</div>
+
+        <div> {{atrbutes.name}} </div>
+        <div> {{atrbutes.surname}} </div>
+        <div> {{atrbutes.email}} </div>
+        <div> {{atrbutes.patronymic_name}} </div>
+        <div> {{atrbutes.avto_id}} </div>
+        <div>
+
+        </div>
+
+        {% endif %}
+        {% if current_user.role_name == 'partner' %}
+
+        {% endif %}
+        {% if not current_user.role_name%}
+        <div class="loader"></div>
+        <div class="loader__tittle">Пожалуйста ожидайте, менеджер подтверждает вашу регистрацию</div>
         {% endif %}
       </div>
     </div>

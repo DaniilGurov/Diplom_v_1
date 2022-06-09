@@ -1,4 +1,15 @@
 $(document).ready(function () {
+  $('.btn__slider__reserv__avto').click(function (event) {
+    $('.modal__avto').addClass('show')
+    $('.btn__slider__reserv__avto').css("display", "none")
+
+  });
+  $('.close__modal',).click(function (event) {
+    $('.modal__avto').removeClass('show')
+    $('.btn__slider__reserv__avto').css("display", "block")
+  });
+});
+$(document).ready(function () {
   $('#btnM1').click(function (event) {
     $('.modal').addClass('show')
     $('#btnM1').css("display", "none")
@@ -35,6 +46,15 @@ $(document).ready(function () {
     $('.btn__modal__user__edit').css("display", "flex")
   });
 });
+$(document).ready(function () {
+  $('.addCommentAvto').click(function (event) {
+    $('.modal_comment').css("display", "flex")
+  });
+  $('.close__modal',).click(function (event) {
+    $('.modal_comment').css("display", "none")
+  });
+});
+
 
 
 $(document).ready(function () {
@@ -89,11 +109,12 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
-  $("#phone").mask("+7(999)999-99-99");
-  $.mask.definitions['Z'] = "[etyopahkxcbmукенхваросмтETYOPAHKXCBNMУКЕНХВАРОСМТ]";
-  $('#inputNumAvto').mask('Z999ZZ99?9');
-});
+
+// $(document).ready(function () {
+//   $("#phone").mask("+7(999)999-99-99");
+//   $.mask.definitions['Z'] = "[etyopahkxcbmукенхваросмтETYOPAHKXCBNMУКЕНХВАРОСМТ]";
+//   $('#inputNumAvto').mask('Z999ZZ99?9');
+// });
 
 
 
@@ -101,5 +122,49 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('.user__input',).change(function (event) {
     $('.btn__user').addClass('show')
+  });
+});
+
+$(document).ready(function () {
+  var button = $('#button-up');
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > 300) {
+      button.fadeIn();
+    } else {
+      button.fadeOut();
+    }
+  });
+  button.on('click', function () {
+    $('body, html').animate({
+      scrollTop: 0
+    }, 800);
+    return false;
+  });
+});
+
+$(function () {
+  $(".done__flash").delay(5000).slideUp(300);
+});
+
+$(document).ready(function () {
+  $('.btn__remove__disabled',).click(function (event) {
+    $('.dis').prop("disabled", false)
+  });
+});
+
+$(document).ready(function () {
+  $('.show__car__photo',).click(function (event) {
+    $('.car__photo').toggleClass('show')
+    $('.show__car__photo').toggleClass('active')
+    $('.high__car__photo').toggleClass('active')
+
+  });
+});
+$(document).ready(function () {
+  $('.high__car__photo',).click(function (event) {
+    $('.car__photo').toggleClass('show')
+    $('.show__car__photo').toggleClass('active')
+    $('.high__car__photo').toggleClass('active')
+
   });
 });

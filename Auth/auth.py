@@ -39,6 +39,8 @@ def registration():
 def registration__post():
     email = request.form.get('email')
     name = request.form.get('name')
+    surname = request.form.get('surname')
+    patronymic_name = request.form.get('patronymic_name')
     password = request.form.get('password')
 
     if request.form['password'] == request.form['password2']:
@@ -46,7 +48,7 @@ def registration__post():
         if user:
             flash('Пользователь с таким Email уже существует')
             return redirect(url_for('auth.registration'))
-        new_user = User(email=email, name=name, password=generate_password_hash(
+        new_user = User(email=email, name=name, surname=surname, patronymic_name=patronymic_name, password=generate_password_hash(
             password, method='sha256'))
 
         db.session.add(new_user)
@@ -63,8 +65,14 @@ def registration__post():
 def sendMessage():
     name = request.form.get('name')
     email = request.form.get('email')
+    surname = request.form.get('surname')
+    patronymic_name = request.form.get('patronymic_name')
     url = 'https://api.telegram.org/bot5336401318:AAHbjzmb3TqWPFf25dNPP1D5YQHpVwUzW0M/sendMessage'
-    req = {'chat_id': '-1001779026771', 'text': 'Зарегестрирован новый пользователь' '\n'  'Email: ' + email + '\n' 'Имя: ' + name}
+    req = {'chat_id': '-1001779026771',
+           'text': 'Зарегестрирован новый пользователь' '\n'  'Email: ' + email
+           + '\n' 'Фамилия: ' + surname
+           + '\n' 'Имя: ' + name
+           + '\n' 'Отчество: ' + patronymic_name}
     requests.post(url, req)
 
 

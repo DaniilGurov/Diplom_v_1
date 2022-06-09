@@ -3,12 +3,13 @@
 <body class="body">
   <div class="page">
     <header class="header">
-      <div class="header__left">
+      <a class="header__left" href="{{ url_for('main.index') }}">
         <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
-      </div>
+      </a>
       <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}">Пользователи</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}">Автомобили</a>
-        <a class="nav__link nav__link--header" href="{{ url_for('main.spare') }}">Запчасти</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.partners') }}">Партнеры</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.driver') }}">Водители</a>
       </div>
       <form action="{{ url_for('main.profile') }}">
@@ -16,77 +17,155 @@
           <div class="profile__photo">
             <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
           </div>
-          <div class="profile__name">{{ name }}</div>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
         </button>
       </form>
     </header>
     <div class="main">
+      <a class="btn__prev" href="{{ url_for('main.cars') }}">
+        <img src="{{ url_for('static', filename='images/arrow__left.svg') }}">
+      </a>
       <div class="content">
-        {% with messages = get_flashed_messages() %} {% if messages %}
-        <div class="flash__photo">{{ messages[0] }}</div>
-        {% endif %} {% endwith %}
-        <div class="slider-wrapper">
 
-          {% for f in AvtoPhoto %}
-          <div class="slide">
-            <img class="slide-img" src="{{url_for ('static',filename=f[1])}}">
-            <form action="/delete?avto_id={{ avto.avto_id }}" method="post">
-              <input type="submit" name="{{f[0]}}" value="{{f[1]}}">
-            </form>
+
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="done__flash">{{ messages[0] }}</div>
+        {% endif %} {% endwith %}
+        <div class="car__info">
+          <div class="car__info__heder">
+            {{ avto.car_make }} {{ avto.car_model }}
           </div>
-          {% endfor %}
-          <div class="dots-wrapper">
+          <div class="car__info__container">
+            <div class="flex_box">
+              <div class="car__info__tittle"> Гос.Номер: </div>
+              <div class="car__info__value">{{ avto.number }}</div>
+            </div>
+            <div class="flex_box">
+              <div class="car__info__tittle"> Пробег: </div>
+              <div class="car__info__value">{{ avto.mileage }}км</div>
+            </div>
+            <div class="flex_box">
+              <div class="car__info__tittle"> Год выпуска: </div>
+              <div class="car__info__value">{{ avto.years }}г</div>
+            </div>
+            <div class="flex_box" style="display: none;">
+              <div class="car__info__tittle"> id_driver: </div>
+              <div class="car__info__value">{{ avto.id_driver }}</div>
+            </div>
+            <div class="flex_box">
+              <div class="car__info__tittle"> Водитель: </div>
+              <div class="car__info__value">{{ current_driver.name }} </div>
+            </div>
+            <p></p>
+          </div>
+          <button class="edit_avto">
+            <img src="{{ url_for('static', filename='images/edit__logo.svg') }}" alt="">
+          </button>
+          <button class="show__car__photo active">Скрыть фото автомобиля</button>
+          <button class="high__car__photo">Показать фото автомобиля</button>
+          {% if not avtocomment %}
+          <button class="addCommentAvto">Добавить комментарий </button>
+          {% endif %}
+          {% if avtocomment %}
+          <button class="ShowCommentAvto">Показать комантарии</button>
+          {% endif %}
+          <div class="commentAvto">
+            {% for com in avtocomment %}
+            <p> {{com.comment}} </p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="car__photo show">
+          <div class="slider-wrapper">
 
             {% for f in AvtoPhoto %}
-            <span class="dot">
-              <img class="img__dot" src="{{url_for ('static',filename=f[1])}}">
-            </span>
+            <div class="slide">
+              <img class="slide-img" src="{{url_for ('static',filename=f[1])}}">
+
+              <form action="/delete?avto_id={{ avto.avto_id }}" method="post">
+                <input class="delete__photo" type="submit" name="{{f[0]}}" value="{{f[1]}}">
+              </form>
+            </div>
             {% endfor %}
+            <div class="dots-wrapper">
 
-          </div>
-          <div id="btn-prev">
-            <img src="{{ url_for('static', filename='images/arrow__left.svg') }}" alt="">
-          </div>
-          <div id="btn-next">
-            <img src="{{ url_for('static', filename='images/arrow__right.svg') }}" alt="">
-          </div>
-        </div>
-        <form class="add__photo" action="/upload-photo?avto_id={{ avto.avto_id }}" method="post"
-          enctype="multipart/form-data">
-          <p>Звгрузить фото автомобиля:</p>
-          <input class="btn_save__photo" type="submit" value="Сохранить">
-          <input class="input__file" type="file" name="file">
-        </form>
+              {% for f in AvtoPhoto %}
+              <span class="dot">
+                <img class="img__dot" src="{{url_for ('static',filename=f[1])}}">
+              </span>
+              {% endfor %}
 
-        <div class="car__info">
-          <p>{{ avto.car_make }}</p>
-          <p>{{ avto.car_model }}</p>
-          <p>{{ avto.mileage }}</p>
-          <p>{{ avto.years }}</p>
+            </div>
+            <div id="btn-prev">
+              <img src="{{ url_for('static', filename='images/arrow__left.svg') }}" alt="">
+            </div>
+            <div id="btn-next">
+              <img src="{{ url_for('static', filename='images/arrow__right.svg') }}" alt="">
+            </div>
+          </div>
+          <form class="add__photo" action="/upload-photo?avto_id={{ avto.avto_id }}" method="post"
+            enctype="multipart/form-data">
+            <p>Звгрузить фото автомобиля:</p>
+            <input class="btn_save__photo" type="submit" value="Сохранить">
+            <input class="input__file" type="file" name="file">
+          </form>
         </div>
-        <button class="edit_avto">редактировать</button>
-      <div class="modal">
+
+        <div class="modal">
           <div class="modal__content">
             <div class="modal__header">
-              <p></p>
+              <p>Редактировать авто</p>
               <button class="close__modal">
                 <img src="{{ url_for('static', filename='images/close.svg') }}" alt="" />
               </button>
             </div>
 
-            <form action="/carEdit/{{ avto.avto_id }}" method="post">
-              <select name="driver">
+            <form class="form__edit__avto" action="/carEdit/{{ avto.avto_id }}" method="post">
+              <p style="margin-bottom:1rem ; font-size: 1.8rem;">Выберете водителя</p>
+              <select class="select__driver" name="driver">
+                <option value="{{ current_driver.driver_id }}"> {{ current_driver.name }} {{ current_driver.surname }}
+                </option>
+                <option value="pure">Снять водителя</option>
                 {% for d in driver %}
-                <option> {{ d.name }} </option>
+                {% if not d.avto_id %}
+                <option value="{{d.driver_id}}"> {{ d.name }} {{ d.surname }} </option>
+                {% endif %}
                 {% endfor %}
               </select>
-              <input value="{{avto.car_make}}" name="car_make">
-              <input value="{{driver.name}}" name="name">
-              <button>сохранитиь</button>
+              {% for d in driver %}
+              <input name="id_driver" style="display:none" value="{{d.driver_id}}">
+              {% endfor %}
+              <div style="width: 30rem; margin: 2rem 0rem;" class="flex_box">
+                <p class="p__carEdit">Укажите пробег автомобиля</p>
+                <input class="input__carEdit" value="{{avto.mileage}}" name="mileage">
+              </div>
+              <button class="btn__carEdit">Сохранить</button>
             </form>
 
           </div>
-      </div>
+        </div>
+        <div class="modal modal_comment">
+          <div class="modal__content">
+            <div class="modal__header">
+              <p>Добавить комментарий</p>
+              <button class="close__modal">
+                <img src="{{ url_for('static', filename='images/close.svg') }}" alt="" />
+              </button>
+            </div>
+            <form class="form__edit__avto" action="/addAvtoComment/{{ avto.avto_id }}" method="post"
+              enctype="multipart/form-data">
+              <input type="text" name="comment">
+              <input type="file" name="file">
+              <button class="btn__carEdit">Сохранить</button>
+            </form>
+
+          </div>
+        </div>
       </div>
 
     </div>

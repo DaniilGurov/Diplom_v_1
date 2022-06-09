@@ -3,40 +3,85 @@
 <body class="body">
     <div class="page">
         <div class="modal show">
-            <a class="btn__prev" href="{{ url_for('main.users') }}" >
+            <a class="btn__prev" href="{{ url_for('main.users') }}">
                 <img src="{{ url_for('static', filename='images/arrow__left.svg') }}">
             </a>
 
             <div class="modal__content modal__content--user">
                 <button class="btn__modal__user__edit"><img
                         src="{{ url_for('static', filename='images/edit__logo.svg') }}"></button>
-                {% for us in user %}
-                <div> {{us.name}} </div>
-                <div> {{us.email}} </div>
 
-                {% if us.role_name == 'driver' %}
-                <div> Водитель </div>
-                {% endif %}
-                {% if us.role_name == 'partner' %}
-                <div> Партнер </div>
-                {% endif %}
-                {% endfor %}
-                <div></div>
+                <div class="user__info__content">
+                    {% for us in user %}
+                    <div class="user__info__profile">
+                        {% if us.user_photo %}
+                        <img src="{{url_for ('static',filename=us.user_photo)}}" alt="">
+                        {% endif %}
+                        {% if not us.user_photo %}
+                        <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
+                        {% endif %}
+                    </div>
+                    {% if not us.user_photo %}
+                    <form class="form__user" action="/photoUser/{{ us.id }}" method="post"
+                        enctype="multipart/form-data">
+                        <p>Загрузить фото пользователя:</p>
+                        <input style="margin-bottom: 1rem;" class="input__file" type="file" name="file">
+                        <input class="save__photoUser" type="submit" value="Сохранить">
+                    </form>
+                    {% endif %}
+                    {% endfor %}
+                    {% for us in user %}
+                    <div class="user__info__container user__info__container--flex">
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Фамилия:</div>
+                            <div class="user__info"> {{us.surname}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Имя:</div>
+                            <div class="user__info"> {{us.name}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Отчество:</div>
+                            <div class="user__info"> {{us.patronymic_name}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Email:</div>
+                            <div class="user__info"> {{us.email}} </div>
+                        </div>
+                        {% if us.role_name == 'driver' %}
+                        <div class="user__info"> Водитель </div>
+                        {% endif %}
+                        {% if us.role_name == 'partner' %}
+                        <div class="user__info"> Партнер </div>
+                        {% endif %}
+                        {% endfor %}
+                        <div></div>
+                    </div>
+                </div>
             </div>
             <div class="modal__edit__user">
                 <button class="close__modal__user__edit">
-                    <img src="{{ url_for('static', filename='images/edit__logo.svg') }}">
+                    Отменить редактирование
+                    <img src="{{ url_for('static', filename='images/close.svg') }}">
                 </button>
                 {% for us in user %}
                 <form class="form__user" action="/reUser/{{ us.id }}" method="post">
-
-                    <input name="name" type="text" value="{{us.name}}">
-                    <input name="email" type="text" value="{{us.email}}">
-                    <select  name="user_role">
-                        <option value="driver">driver</option>
-                        <option value="partner">partner</option>
+                    <p class="form__user__tittle">Фамилия:</p>
+                    <input class="editUser__input" name="surname" type="text" value="{{us.surname}}">
+                    <p class="form__user__tittle">Имя:</p>
+                    <input class="editUser__input" name="name" type="text" value="{{us.name}}">
+                    <p class="form__user__tittle">Отчество:</p>
+                    <input class="editUser__input" name="patronymic_name" type="text" value="{{us.patronymic_name}}">
+                    <p class="form__user__tittle">Email:</p>
+                    <input class="editUser__input" name="email" type="text" value="{{us.email}}">
+                    {% if not us.role_name %}
+                    <p class="form__user__tittle">Роль:</p>
+                    <select name="user_role" class="user_role">
+                        <option value="driver">Водитель</option>
+                        <option value="partner">Партнер</option>
                     </select>
-                    <button>сохранить</button>
+                    {% endif %}
+                    <button class="btn__saveuserEdit">Сохранить</button>
 
                 </form>
                 {% endfor %}

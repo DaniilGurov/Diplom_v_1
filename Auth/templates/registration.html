@@ -9,6 +9,8 @@
     {% endif %} {% endwith %}
     <form class="auth__login" method="POST" action="/registration">
       <input class="auth__input" type="text" name="name" placeholder="Имя" />
+      <input class="auth__input" type="text" name="surname" placeholder="Фамилия" />
+      <input class="auth__input" type="text" name="patronymic_name" placeholder="Отчество" />
       <input class="auth__input" type="email" name="email" placeholder="Email" />
       <div class="flex_boxCenter">
         <input class="auth__input " type="password" name="password" id="password-input2" placeholder="Пароль" />

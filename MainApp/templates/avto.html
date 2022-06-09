@@ -3,12 +3,13 @@
 <body class="body">
   <div class="page">
     <header class="header">
-      <div class="header__left">
+      <a class="header__left" href="{{ url_for('main.index') }}">
         <img src="{{ url_for('static', filename='images/header_logo.png') }}" class="header_logo" alt="" />
-      </div>
+      </a>
       <div class="header__main">
+        <a class="nav__link nav__link--header" href="{{ url_for('main.users') }}">Пользователи</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.cars') }}">Автомобили</a>
-        <a class="nav__link nav__link--header" href="{{ url_for('main.spare') }}">Запчасти</a>
+        <a class="nav__link nav__link--header" href="{{ url_for('main.partners') }}">Партнеры</a>
         <a class="nav__link nav__link--header" href="{{ url_for('main.driver') }}">Водители</a>
       </div>
       <form action="{{ url_for('main.profile') }}">
@@ -16,7 +17,12 @@
           <div class="profile__photo">
             <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="" />
           </div>
-          <div class="profile__name">{{ current_user.name }}</div>
+          <div class="flexColum">
+            <div class="profile__name">{{ current_user.name }}</div>
+            <a href="{{ url_for('auth.logout') }}">
+              Выйти
+            </a>
+          </div>
         </button>
       </form>
     </header>
@@ -27,7 +33,9 @@
           <a class="tab_car__container" href="/car/{{ el.avto_id }}">
             <div class="car__container">
               <div class="car__container__img">
-                <img src="{{ url_for('static', filename='images/car.svg') }}" alt="" />
+
+                <img class="" src="{{url_for ('static',filename=(avtophoto[loop.index -1].url_photo))}}"
+                  alt="Изображение еще не загружено">
               </div>
               <div class="car__container__tittle">{{ el.number }}</div>
             </div>
