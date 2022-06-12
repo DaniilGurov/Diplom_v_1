@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block body %}
+
+<body class="body">
+    <div class="page">
+        <div class="modal show">
+            <a class="btn__prev" href="{{ url_for('main.users') }}">
+                <img src="{{ url_for('static', filename='images/arrow__left.svg') }}">
+            </a>
+
+            <div class="modal__content modal__content--user">
+                <button class="btn__modal__user__edit"><img
+                        src="{{ url_for('static', filename='images/edit__logo.svg') }}"></button>
+
+                <div class="user__info__content">
+
+                    <div class="user__info__profile">
+                        {% if driver.driver_photo %}
+                        <img src="{{url_for ('static',filename=driver.driver_photo)}}" alt="">
+                        {% endif %}
+                        {% if not driver.driver_photo %}
+                        <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
+                        {% endif %}
+                    </div>
+                    {% if not driver_photo %}
+                    <form class="form__user" action="/photoUser/{{ user.id }}" method="post"
+                        enctype="multipart/form-data">
+                        <p>Загрузить фото пользователя:</p>
+                        <input style="margin-bottom: 1rem;" class="input__file" type="file" name="file">
+                        <input class="save__photoUser" type="submit" value="Сохранить">
+                    </form>
+                    {% endif %}
+
+
+                    <div class="user__info__container user__info__container--flex">
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Фамилия:</div>
+                            <div class="user__info"> {{driver.surname}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Имя:</div>
+                            <div class="user__info"> {{driver.name}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Отчество:</div>
+                            <div class="user__info"> {{driver.patronymic_name}} </div>
+                        </div>
+                        <div class="user__info__flexBox">
+                            <div class="user__info__tittle">Email:</div>
+                            <div class="user__info"> {{driver.email}} </div>
+                        </div>
+
+                        {% if driver.role_name == 'driver' %}
+                        <div class="user__info"> Водитель </div>
+                        {% endif %}
+                        {% if driver.avto_id %}
+                        <a class="car_driverTab" href="/car/{{ avto.avto_id }}">
+                            <div class="user__info__flexBox">
+                                <div class="user__info__tittle">Автомобиль:</div>
+                                <div class="user__info"> {{avto.number}} </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal__edit__user">
+                <button class="close__modal__user__edit">
+                    Отменить редактирование
+                    <img src="{{ url_for('static', filename='images/close.svg') }}">
+                </button>
+
+                <form class="form__user" action="/reDriver/{{ driver.driver_id }}" method="post">
+                    <p class="form__user__tittle">Фамилия:</p>
+                    <input class="editUser__input" name="surname" type="text" value="{{driver.surname}}">
+                    <p class="form__user__tittle">Имя:</p>
+                    <input class="editUser__input" name="name" type="text" value="{{driver.name}}">
+                    <p class="form__user__tittle">Отчество:</p>
+                    <input class="editUser__input" name="patronymic_name" type="text"
+                        value="{{driver.patronymic_name}}">
+                    <p class="form__user__tittle">Email:</p>
+                    <input class="editUser__input" name="email" type="text" value="{{driver.email}}">
+                    <button class="btn__saveuserEdit">Сохранить</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
