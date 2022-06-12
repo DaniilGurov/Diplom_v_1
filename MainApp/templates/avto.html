@@ -71,6 +71,13 @@
                   <input class="add__avto__date" type="number" min="2012" max="2022" step="1" value="2014" name="years"
                     required />
                 </div>
+                {% if not avto.partner_id %}
+              <select class="select__driver" name="partner">
+                {% for p in partner %}
+                <option value="p.partner_id">{{p.surname}} {{p.name}} {{p.patronymic_name}}</option>
+                {% endfor %}
+              </select>
+              {% endif %}
                 <div class="add__avto__FlexBox">
                   <p>Введите Гос. номер авто:</p>
                   <input class="add__avto__number" type="text" placeholder="А001АА01" name="number" maxlength="9"

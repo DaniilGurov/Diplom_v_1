@@ -532,6 +532,94 @@ body {
   background-color: #ffffff;
   margin: 2rem 0rem;
   margin-bottom: 5rem;
+  padding: 2rem 5rem;
+
+  max-height: 22rem;
+  overflow: auto;
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+}
+
+.commentAvto.show {
+  display: flex;
+}
+
+.ShowCommentAvto {
+  position: absolute;
+  left: 2rem;
+  top: 14rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.addCommentAvto {
+  position: absolute;
+  left: 2rem;
+  top: 14rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.car_driverTab {
+  color: #000000;
+
+}
+
+.addCommentAvto--max {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffde59;
+  border: none;
+  border-radius: 1rem;
+  font-size: 2.5rem;
+  cursor: pointer;
+  font-weight: 700;
+
+
+}
+
+.avtocomment__container {
+  width: 50rem;
+  height: 15rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  border-radius: 3rem;
+  margin-bottom: 2rem;
+}
+
+.avtocomment__containerText {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.avtocomment__containerText p {
+  overflow-y: auto;
+  width: 25rem;
+  word-wrap: break-word;
+}
+
+.avtocomment__containerImg {
+  width: 15rem;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 1rem;
 }
 
 .password-checkbox {
@@ -927,6 +1015,7 @@ body {
   background-color: #f2f2f2;
   margin-bottom: 2rem;
   position: relative;
+  padding-bottom: 2rem;
 }
 
 .car__info__heder {
@@ -958,7 +1047,7 @@ body {
   border: none;
   background: transparent;
   right: 4rem;
-  bottom: 0;
+  bottom: 1rem;
   color: #808080;
   cursor: pointer;
   text-decoration: underline;
@@ -982,8 +1071,30 @@ body {
   border-top: 2px solid #808080;
   border-right: 2px solid #808080;
   margin-left: 0.5rem;
-  margin-top: 0.5rem;
-  transform: rotate(135deg);
+  margin-top: 1rem;
+  transform: rotate(-45deg);
+}
+
+.inputComment {
+  width: 30rem;
+  min-height: 3rem;
+  border: none;
+  background-color: #f2f2f2;
+  border-radius: 3rem;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+
+}
+
+.showAddPhoto {
+  width: auto;
+  background-color: #ffde59;
+  border-radius: 3rem;
+  cursor: pointer;
+  border: none;
+  height: 4rem;
+  margin: 1rem auto;
+  font-weight: 500;
 }
 
 .show__car__photo.active {
@@ -992,7 +1103,7 @@ body {
   border: none;
   background: transparent;
   right: 4rem;
-  bottom: 0;
+  bottom: 1rem;
   color: #808080;
   cursor: pointer;
   text-decoration: underline;
@@ -1024,8 +1135,8 @@ body {
   border-top: 2px solid #808080;
   border-right: 2px solid #808080;
   margin-left: 0.5rem;
-  margin-top: 1rem;
-  transform: rotate(-45deg);
+  margin-top: 0.5rem;
+  transform: rotate(135deg);
 }
 
 .form__edit__avto {

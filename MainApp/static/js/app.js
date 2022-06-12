@@ -54,7 +54,28 @@ $(document).ready(function () {
     $('.modal_comment').css("display", "none")
   });
 });
+$(document).ready(function () {
+  $('.showAddPhoto').click(function (event) {
+    $('.add_photo').css("display", "flex")
+    $('.showAddPhoto').css("display", "none")
 
+  });
+});
+
+$(document).ready(function () {
+  $('.ShowCommentAvto').click(function (event) {
+    $('.commentAvto').toggleClass("show")
+    if ($(this).attr('data-show') === "true") {
+      $(this).text("Показать комантарии");
+      $(this).attr('data-show', "false");
+    }
+    else {
+      $(this).text("Скрыть комантарии");
+      $(this).attr('data-show', "true");
+    }
+  });
+
+});
 
 
 $(document).ready(function () {

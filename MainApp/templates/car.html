@@ -66,8 +66,8 @@
           <button class="edit_avto">
             <img src="{{ url_for('static', filename='images/edit__logo.svg') }}" alt="">
           </button>
-          <button class="show__car__photo active">Скрыть фото автомобиля</button>
-          <button class="high__car__photo">Показать фото автомобиля</button>
+          <button class="show__car__photo active">Показать фото автомобиля</button>
+          <button class="high__car__photo">Скрыть фото автомобиля</button>
           {% if not avtocomment %}
           <button class="addCommentAvto">Добавить комментарий </button>
           {% endif %}
@@ -76,13 +76,24 @@
           {% endif %}
           <div class="commentAvto">
             {% for com in avtocomment %}
-            <p> {{com.comment}} </p>
+            <div class="avtocomment__container">
+              <div class="avtocomment__containerText">
+                <p> {{com.comment}} </p>
+                <p> {{com.date.date()}} </p>
+              </div>
+
+              <div class="avtocomment__containerImg">
+                <img src="{{url_for ('static',filename=com.commentPhoto)}}" alt="">
+              </div>
+
+            </div>
             {% endfor %}
+            <button class="addCommentAvto addCommentAvto--max">+</button>
           </div>
         </div>
-        <div class="car__photo show">
+        <div class="car__photo ">
           <div class="slider-wrapper">
-
+            {% if AvtoPhoto %}
             {% for f in AvtoPhoto %}
             <div class="slide">
               <img class="slide-img" src="{{url_for ('static',filename=f[1])}}">
@@ -108,6 +119,7 @@
               <img src="{{ url_for('static', filename='images/arrow__right.svg') }}" alt="">
             </div>
           </div>
+          {% endif %}
           <form class="add__photo" action="/upload-photo?avto_id={{ avto.avto_id }}" method="post"
             enctype="multipart/form-data">
             <p>Звгрузить фото автомобиля:</p>
@@ -159,11 +171,16 @@
             </div>
             <form class="form__edit__avto" action="/addAvtoComment/{{ avto.avto_id }}" method="post"
               enctype="multipart/form-data">
-              <input type="text" name="comment">
-              <input type="file" name="file">
-              <button class="btn__carEdit">Сохранить</button>
-            </form>
+              <p style="margin-bottom:1rem ; font-size: 1.8rem; font-weight: 500;">Введите комментарий</p>
+              <textarea name="comment" class="inputComment"></textarea>
 
+              <div class="add_photo" style="display: none;">
+                <input type="file" name="file">
+              </div>
+              <button class="btn__carEdit">Сохранить</button>
+
+            </form>
+            <button class="showAddPhoto"> Добавить фото</button>
           </div>
         </div>
       </div>

@@ -28,48 +28,46 @@
     </header>
     <div class="main">
       <div class="content">
-<div class="content__action">
-        {% for d in driver %}
-        <div class="profile__user">
-          <div class="userAva">
-            {% if d.driver_photo %}
-            <img src="{{url_for ('static',filename=d.driver_photo)}}" alt="">
-            {% endif %}
-            {% if not d.driver_photo %}
-            <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
-            {% endif %}
+        <div class="content__action">
+          {% for d in driver %}
+          <div class="profile__user">
+            <div class="userAva">
+              {% if d.driver_photo %}
+              <img src="{{url_for ('static',filename=d.driver_photo)}}" alt="">
+              {% endif %}
+              {% if not d.driver_photo %}
+              <img src="{{ url_for('static', filename='images/profile_photo.svg') }}" alt="">
+              {% endif %}
+            </div>
+            <div class="user__info__container">
+              <div class="user__info">
+                {{ d.name }}
+              </div>
+              <div class="user__info">
+                {{d.email}}
+              </div>
+
+              {% if d.role_name == 'driver' %}
+              <div class="user__info">
+                Водитель
+              </div>
+              {% endif %}
+              <a class="user__info__tab" href="/driver_profile/{{ d.driver_id }}">
+                Профиль Водителя
+                <img src="/static/images/arrow_rightC4.svg" alt="">
+              </a>
+              <button class="btn__user"></button>
+            </div>
           </div>
-          <div class="user__info__container">
-            <div class="user__info">
-              {{ d.name }}
-            </div>
-            <div class="user__info">
-              {{d.email}}
-            </div>
-            <div class="user__info">
-              {{d.avto_id}}
-            </div>
-            {% if d.role_name == 'driver' %}
-            <div class="user__info">
-              Водитель
-            </div>
-            {% endif %}
-            <a class="user__info__tab" href="/driver_profile/{{ d.driver_id }}">
-              Профиль Водителя
-              <img src="/static/images/arrow_rightC4.svg" alt="">
-            </a>
-            <button class="btn__user"></button>
-          </div>
+
+          {% endfor %}
+
+          <form action="/add_driver" method="post">
+
+          </form>
+
         </div>
-
-        {% endfor %}
-
-        <form action="/add_driver" method="post">
-
-        </form>
-
       </div>
-        </div>
     </div>
   </div>
 </body>

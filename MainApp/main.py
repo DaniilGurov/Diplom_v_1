@@ -37,7 +37,7 @@ def profile():
 def car(avto_id):
     driver = Driver.query.all()
     avto = Avto.query.filter_by(avto_id=avto_id).first()
-    avtocomment = AvtoComment.query.filter_by(avto_id=avto_id).first()
+    avtocomment = AvtoComment.query.filter_by(avto_id=avto_id).all()
     current_driver = Driver.query.filter_by(avto_id=avto_id).first()
     avtophoto = AvtoPhoto.query.order_by(
         AvtoPhoto.photo_id.desc()).filter_by(avto_id=avto_id).all()
@@ -124,8 +124,6 @@ def addAvtoComment(avto_id):
         comment = request.form['comment']
         if comment is not None:
             flash('Заполните все поля')
-        if not f.filename:
-            flash('Выберете файл')
         if f.filename:
             f.filename = str(random.randint(10000, 1000000))
             f.save(os.path.join(UPLOAD_FOLDER, secure_filename(f.filename)))
@@ -200,8 +198,9 @@ def cars():
 
     avtophoto = [AvtoPhoto.query.filter_by(
         avto_id=avto_id.avto_id).first() for avto_id in avto]
+    partner = Partner.query.all()
 
-    return render_template('avto.html', avto=avto, current_user=current_user, avtophoto=avtophoto)
+    return render_template('avto.html', avto=avto, current_user=current_user, avtophoto=avtophoto, partner=partner)
 
 
 @main.route('/driver')
@@ -229,8 +228,9 @@ def addCar():
         years = request.form['years']
         number = request.form['number']
         mileage = request.form['mileage']
+        partner_id = request.form['partner']
         new_avto = Avto(car_make=car_make, car_model=car_model,
-                        years=years, number=number, mileage=mileage)
+                        years=years, number=number, mileage=mileage, partner_id=partner_id)
         try:
             db.session.add(new_avto)
             db.session.commit()
